@@ -12,7 +12,7 @@ Below is a simple example of how to use the Datepicker in a React view.
 
 ```tsx
 import React from "react";
-import { Datepicker, DatepickerEvent} from "@meinefinsternis/react-horizontal-date-picker";
+import { Datepicker, DatepickerEvent} from "@atornatore/react-horizontal-date-picker";
 import { enUS } from "date-fns/locale";
 
 const Example = () => {
@@ -54,3 +54,20 @@ Common props you may want to specify include:
 - `endDate`?: `Date` - defines maximum date. Default `new Date() + 3 months`
 - `className`?: `object` - apply a className to the customize
 - `disabledDates`?: `Date[]` - list of disabled dates
+
+## ClassName object
+
+Definition of DatepickerClasses object:
+
+```tsx
+{container: string;
+  selectedDay: string;
+  rangeDays: string;
+  dayItem: string;
+  dayLabel: string;
+  monthLabel: string;
+  dateLabel: string;
+  weekendItem: string;
+  arrowItem: string;
+}
+```

@@ -18,23 +18,4 @@ declare const classNames: {
   readonly isWeekend: "isWeekend";
   readonly inRange: "inRange";
 };
-export default classNames;
-export type ClassNames =
-  | "container"
-  | "button"
-  | "buttonPrev"
-  | "buttonDisabled"
-  | "buttonNext"
-  | "dateListScrollable"
-  | "monthContainer"
-  | "monthLabel"
-  | "dateDayItem"
-  | "dateDayItemSelected"
-  | "dateDayItemMarked"
-  | "daysContainer"
-  | "dayLabel"
-  | "dateLabel"
-  | "markedLabel"
-  | "datesContainer"
-  | "isWeekend"
-  | "inRange";
+export = classNames;

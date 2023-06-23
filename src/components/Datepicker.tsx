@@ -52,6 +52,7 @@ const NextIcon = () => {
 };
 
 export type DatepickerClasses = {
+  container: string;
   selectedDay: string;
   rangeDays: string;
   dayItem: string;
@@ -59,6 +60,7 @@ export type DatepickerClasses = {
   monthLabel: string;
   dateLabel: string;
   weekendItem: string;
+  arrowItem: string;
 };
 
 export type DatepickerEvent = [Date | null, Date | null, Date[] | null];
@@ -205,8 +207,11 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       : s.isWeekend;
 
     return (
-      <div ref={ref} className={s.container}>
-        <button onClick={prevScroll} className={clsx(s.button, s.buttonPrev)}>
+      <div ref={ref} className={clsx(CN?.container, s.container)}>
+        <button
+          onClick={prevScroll}
+          className={clsx(CN?.arrowItem, s.button, s.buttonPrev)}
+        >
           <PrevIcon />
         </button>
         <div ref={containerRef} className={s.dateListScrollable}>
@@ -264,7 +269,10 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
             );
           })}
         </div>
-        <button onClick={nextScroll} className={clsx(s.button, s.buttonNext)}>
+        <button
+          onClick={nextScroll}
+          className={clsx(CN?.arrowItem, s.button, s.buttonNext)}
+        >
           <NextIcon />
         </button>
       </div>

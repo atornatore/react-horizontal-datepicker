@@ -60,7 +60,8 @@ Common props you may want to specify include:
 Definition of DatepickerClasses object:
 
 ```tsx
-{container: string;
+{
+  container: string;
   selectedDay: string;
   rangeDays: string;
   dayItem: string;

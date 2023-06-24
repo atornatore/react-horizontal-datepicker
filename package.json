@@ -1,6 +1,6 @@
 {
   "name": "@atornatore/react-horizontal-date-picker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "description": "A simple component that allows the user to choose a date from a scrollable monthly view.",
   "homepage": "https://github.com/atornatore/react-horizontal-datepicker",

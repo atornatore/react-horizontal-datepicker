@@ -216,12 +216,12 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
         </button>
         <div ref={containerRef} className={s.dateListScrollable}>
           {DATES.map(({ month, days }, idx) => {
-            const _month = format(month, "LLLL", { locale });
+            const _month = format(month, "LLLL YYYY", { locale });
             const _monthCapitalizeFirstLetter = capitalizeFirstLetter(_month);
 
             return (
               <div key={_month + idx} className={s.monthContainer}>
-                <div className={s.monthLabel}>
+                <div className={clsx(s.monthLabel, CN?.monthLabel)}>
                   {_monthCapitalizeFirstLetter}
                 </div>
                 <div className={s.daysContainer}>

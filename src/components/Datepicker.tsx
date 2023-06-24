@@ -216,7 +216,7 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
         </button>
         <div ref={containerRef} className={s.dateListScrollable}>
           {DATES.map(({ month, days }, idx) => {
-            const _month = format(month, "LLLL YYYY", { locale });
+            const _month = format(month, "MMMM YYYY", { locale });
             const _monthCapitalizeFirstLetter = capitalizeFirstLetter(_month);
 
             return (

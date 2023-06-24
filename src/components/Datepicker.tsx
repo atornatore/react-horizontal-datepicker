@@ -140,9 +140,9 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       });
     }, [startDate, endDate]);
 
-    const onDateClick = (selectedDate: Date) => {
+    const onDateClick = (selectedDate: Date, idElement: string) => {
       const changedDate = selectedDate;
-      const noRanges = !!(!startValue && !endValue);
+      const noRanges = !!(!startValue && !endValue) || startValue === endValue;
       const hasStartRange = !!(startValue && !endValue);
       const isRangeFilled = !!(startValue && endValue);
 
@@ -172,10 +172,48 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       if (isRangeFilled) {
         onChange([changedDate, null, null]);
       }
+
+      const dayElement = document.getElementById(idElement)!;
+      const parent = dayElement!.parentElement!;
+
+      const indexMonth = parseInt(idElement.split("_")[1]);
+      const indexDay = parseInt(idElement.split("_")[2]);
+
+      let scrollPosition = 0;
+
+      const currentMonthElement = document.getElementById(
+        "monthitem_" + indexMonth,
+      );
+
+      for (let i = 0; i < indexMonth; i++) {
+        const monthElement = document.getElementById("monthitem_" + i);
+
+        if (monthElement)
+          scrollPosition += monthElement?.getBoundingClientRect().width;
+      }
+
+      scrollPosition +=
+        (dayElement.getBoundingClientRect().width + 10) * indexDay +
+        (dayElement.getBoundingClientRect().width + 10) / 2;
+
+      if (currentMonthElement)
+        scrollPosition -= currentMonthElement.offsetParent?.offsetWidth / 2;
+
+      if (scrollPosition < 0) scrollPosition = 0;
+
+      scrollTo(scrollPosition);
     };
 
     const containerRef = React.useRef<HTMLDivElement | null>(null);
 
+    const scrollTo = (pos: number) => {
+      if (containerRef.current) {
+        containerRef.current.scrollTo({
+          left: pos,
+          behavior: "smooth",
+        });
+      }
+    };
     const nextScroll = () => {
       if (containerRef.current) {
         containerRef.current.scrollBy({
@@ -220,12 +258,16 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
             const _monthCapitalizeFirstLetter = capitalizeFirstLetter(_month);
 
             return (
-              <div key={_month + idx} className={s.monthContainer}>
+              <div
+                id={"monthitem_" + idx}
+                key={_month + idx}
+                className={s.monthContainer}
+              >
                 <div className={clsx(s.monthLabel, CN?.monthLabel)}>
                   {_monthCapitalizeFirstLetter}
                 </div>
                 <div className={s.daysContainer}>
-                  {days.map((d, idx) => {
+                  {days.map((d, idy) => {
                     const dayLabel = format(d, "EEEEEE", { locale });
                     const dateLabel = format(d, "dd", { locale });
                     const isDisabled = disabledDates?.some(isEqualDate(d));
@@ -240,14 +282,17 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
                     return (
                       <div
                         data-testid="DAY_ITEM"
-                        key={dayLabel + idx + _month}
+                        id={"dayitem_" + idx + "_" + idy}
+                        key={dayLabel + idy + _month}
                         {...(isDisabled ? { "aria-disabled": "true" } : {})}
                         className={clsx(s.dateDayItem, CN?.dayItem, {
                           [rangeClasses]: isRange,
                           [dateDayItemSelectedClasses]: isDaySelected,
                           [weekendClasses]: isWeekend(d),
                         })}
-                        onClick={() => onDateClick(d)}
+                        onClick={(e) =>
+                          onDateClick(d, "dayitem_" + idx + "_" + idy)
+                        }
                       >
                         <div
                           data-testid="DAY_LABEL"

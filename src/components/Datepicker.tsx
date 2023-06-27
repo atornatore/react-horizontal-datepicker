@@ -174,7 +174,6 @@ export const Datepicker = forwardRef<HTMLDivElement, DatepickerProps>(
       }
 
       const dayElement = document.getElementById(idElement)!;
-      const parent = dayElement!.parentElement!;
 
       const indexMonth = parseInt(idElement.split("_")[1]);
       const indexDay = parseInt(idElement.split("_")[2]);
